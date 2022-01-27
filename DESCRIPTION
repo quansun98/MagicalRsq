@@ -1,0 +1,20 @@
+Package: deepRsq
+Title: Model training and calculation of DeepRsq
+Version: 0.1.0
+Authors@R: 
+    person(given = "Quan",
+           family = "Sun",
+           role = c("aut", "cre"),
+           email = "quansun@live.unc.edu",
+           comment = c(ORCID = "0000-0001-8324-2803"))
+Description: This package is used for calculating deepRsq, a genotype imputation quality metric.
+License: use_mit_license()
+Encoding: UTF-8
+LazyData: true
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.1.1
+Depends: xgboost, stringr
+Imports: data.table, dplyr
+Suggests: 
+    testthat (>= 3.0.0), parallelMap, Ckmeans.1d.dp
+Config/testthat/edition: 3
