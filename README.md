@@ -2,7 +2,7 @@
 
 ## Introduction
 
-DeepRsq is a novel quality estimates of genotype imputation using XGBoost method. By default, it starts from the standard Rsq and estimated MAF given by minimac imputation software, integrates population genetics statistics and population-specific allele frequencies, and calibrates the original Rsq. You can also train deepRsq models yourself with whatever variant-level features you like. 
+DeepRsq is a novel quality estimates of genotype imputation using XGBoost method. By default, it starts from the standard Rsq and estimated MAF given by minimac imputation software, integrates population genetics statistics and population-specific allele frequencies, and calibrates the original Rsq. You can also train deepRsq models yourself with whatever variant-level features you like and any amounts of variants you want. 
 
 ## Data
 
@@ -52,16 +52,6 @@ You can also integrate true R2 information in this file and used for training mo
 You will get integrated data for chr22 written in the file `chr22_integrated.txt.gz`.
 
 
-### Calculate deepRsq values
-
-After getting the integrated data, you can calculate deepRsq values for each variant in the integrated data file.
-
-		chr22_deepRsq  = calc_deepRsq(file = "chr22_integrated.txt.gz", model = "model/BioMe_EUR_uncommoon_200k", 
-			FeatureCols = 5:85, keptCols = 1:6, outfile = "chr22_deepRsq.txt.gz")
-
-You will get variant-level deepRsq values, together with the original Rsq and estimated MAF written in the file `chr22_deepRsq.txt.gz`
-
-
 ### Train deepRsq models yourself
 
 You can also train deepRsq models yourself, if you have the true R2 (true imputation quality) for all/subset of variants. The procedure will be demonstrated with the example data `BioMe_EUR_Rsq_trueR2_chr22_50k.txt.gz` in the `data/` folder.
@@ -79,10 +69,25 @@ Note that you can use whole genome data (separated by chromosomes) to train a wh
 
 		JHS_model = train_deepRsq(file = paste0("JHS_1000G_chr",1:22,".txt.gz"), outfile = "JHS_trained", nvar_use = 500000)
 
+### Calculate deepRsq values
+
+After getting the integrated data, you can calculate deepRsq values for each variant in the integrated data file.
+
+                chr22_deepRsq  = calc_deepRsq(file = "chr22_integrated.txt.gz", model = "model/BioMe_EUR_uncommoon_200k",
+                        FeatureCols = 5:85, keptCols = 1:6, outfile = "chr22_deepRsq.txt.gz")
+
+You will get variant-level deepRsq values, together with the original Rsq and estimated MAF written in the file `chr22_deepRsq.txt.gz`
 
 
+### Evaluate Rsq/deepRsq performance (true R2 required)
 
+After calculation of deepRsq, you can evaluate the performance of Rsq and/or deepRsq compared to true R2. You may want to specify the column numbers of trueR2, Rsq and deepRsq. You can only choose to disregard extremely rare variants for evaluation purpose by setting MAF or (MAC and N samples), and specifying the column number of MAF.
 
+		chr22_eval = eval_deepRsq(file = "MESA_deepRsq_JHS_model.txt.gz", MAF = 0.001, trueR2Col = 8, MAFCol = 5, RsqCol = 6, deepRsqCol = 7)
+
+All 22 chromosomes can also be evaluated together:
+
+		all_eval = eval_deepRsq(file = paste0("BioMe_deepRsq_MESA_model_chr",1:22,".txt.gz"))
 
 
 

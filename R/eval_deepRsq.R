@@ -38,7 +38,7 @@ message(paste(n_file,"files detected"))
 dat = fread(file[1], header = header)
 # multiple files
 for(i in 2:n_file){
-tmp = fread(file, header = header)
+tmp = fread(file[i], header = header)
 dat = rbind(dat,tmp)
 }
 }
@@ -53,7 +53,7 @@ MAF = MAC/2/N
 }
 
 message(paste("Including variants with MAF >=", MAF))
-dat = dat[MAFCol >= MAF,]
+dat = dat[dat[,MAFCol] >= MAF,]
 }
 
 # evaluate deepRsq and Rsq performance

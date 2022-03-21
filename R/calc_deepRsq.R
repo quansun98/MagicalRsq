@@ -11,6 +11,8 @@
 #' Note that the default values are different from `train_deepRsq` function since we assume true R2 information is not available in the input data here.
 #' @param keptCols Vector of column numbers that needs to be carried over into the output files, e.g. variants ID, chromosome, positions, alleles, estimated MAF. etc.
 #' Default values 1:6, including Chr, Pos, Ref, Alt, MAF and Rsq.
+#' @param MAF_cate Minor allee frequency category. Must be chosen from c("common","lowfreq","rare). If not specified, it will use all the variants to train models.
+#' @param MAFCol Column number of minor allele frequency. Optional. Must be specified if `MAF_cate` is used.
 #' @param outfile Name of the output file containing the calculated deepRsq values for each variant. Strongly recommended to specify the output file name to save the data.
 #' @param seed Random seed. Default value 123.
 #'
@@ -31,7 +33,7 @@
 #' @export
 
 calc_deepRsq = function(file, header = T, model, FeatureCols = 5:85, keptCols = 1:6, 
-  outfile = NULL, seed = 123){
+  MAF_cate = NULL, MAFCol = NULL, outfile = NULL, seed = 123){
 
 set.seed(seed)
 
@@ -53,12 +55,30 @@ message(paste(n_file,"files detected"))
 dat = fread(file[1], header = header)
 # multiple files
 for(i in 2:n_file){
-tmp = fread(file, header = header)
+tmp = fread(file[i], header = header)
 dat = rbind(dat,tmp)
 }
 }
 
 dat = as.data.frame(dat)
+
+# MAF filter
+
+if(!is.null(MAF_cate)){
+if(is.null(MAFCol)){
+stop("MAF category specified, but MAF column doesn't specified")
+}else if(MAF_cate == "common"){
+dat = dat[which(dat[,MAFCol] >= 0.05), ]
+}else if(MAF_cate == "lowfreq"){
+dat = dat[which((dat[,MAFCol] > 0.005) & (dat[,MAFCol] < 0.05)), ]
+}else if(MAF_cate == "rare"){
+dat = dat[which(dat[,MAFCol] <= 0.005),]
+}else{
+stop("MAF category must have values chosen from 'common','lowfreq' and 'rare'")
+}
+}
+
+
 
 output = dat[,keptCols]
 output$deepRsq = predict(bst, as.matrix(dat[,FeatureCols]))

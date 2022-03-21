@@ -10,6 +10,8 @@ calc_deepRsq(
   model,
   FeatureCols = 5:85,
   keptCols = 1:6,
+  MAF_cate = NULL,
+  MAFCol = NULL,
   outfile = NULL,
   seed = 123
 )
@@ -27,6 +29,10 @@ Note that the default values are different from \code{train_deepRsq} function si
 
 \item{keptCols}{Vector of column numbers that needs to be carried over into the output files, e.g. variants ID, chromosome, positions, alleles, estimated MAF. etc.
 Default values 1:6, including Chr, Pos, Ref, Alt, MAF and Rsq.}
+
+\item{MAF_cate}{Minor allee frequency category. Must be chosen from c("common","lowfreq","rare). If not specified, it will use all the variants to train models.}
+
+\item{MAFCol}{Column number of minor allele frequency. Optional. Must be specified if \code{MAF_cate} is used.}
 
 \item{outfile}{Name of the output file containing the calculated deepRsq values for each variant. Strongly recommended to specify the output file name to save the data.}
 

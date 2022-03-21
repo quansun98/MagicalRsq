@@ -9,8 +9,10 @@ train_deepRsq(
   header = T,
   outfile = NULL,
   nvar_use = NULL,
+  MAF_cate = NULL,
   p_train = 0.7,
   trueR2Col = 5,
+  MAFCol = NULL,
   FeatureCols = 6:86,
   seed = 123,
   nrounds = 3000,
@@ -29,10 +31,14 @@ train_deepRsq(
 \item{nvar_use}{Number of variants to use for the model training and validation purpose. If not specified, all variants in the data file will be used.
 Note that the model training will take much longer time if using full set of variants. Recommended values ranging from 10,000 to 1,000,000.}
 
+\item{MAF_cate}{Minor allee frequency category. Must be chosen from c("common","lowfreq","rare). If not specified, it will use all the variants to train models.}
+
 \item{p_train}{Proportion of variants used in training part. The rest of the variants would be used for validation purpose. Default value is 70\%.
 Note that the total number of variants for validation is \code{nvar_use}*(1 - \code{p_train}).}
 
 \item{trueR2Col}{Column number of true R2. Default value 5.}
+
+\item{MAFCol}{Column number of minor allele frequency. Optional. Must be specified if \code{MAF_cate} is used.}
 
 \item{FeatureCols}{Vector of column numbers of all the features used for model training. By default, it will be 6:86 including 81 features covering
 population genetics, allele frequencies across populations, etc., provided online. More user-defined features are also feasible.}
@@ -57,6 +63,9 @@ This function is used to train deepRsq models with data files containing all the
 
 MESA_model = train_deepRsq(file = "MESA_1000G_allchr.txt.gz", 
 outfile = "MESA_trained", nvar_use = 500000)
+
+MESA_common = train_deepRsq(file = "MESA_1000G_allchr.txt.gz", 
+MAF_cate = "common", MAFCol = 6, outfile = "MESA_common")
 
 ## If data are separated by chromosomes 
 JHS_model = train_deepRsq(file = paste0("JHS_1000G_chr",1:22,".txt.gz"), 

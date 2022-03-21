@@ -7,9 +7,11 @@
 #' @param outfile Name of the deepRsq model output. Strings. Strongly recommended to specify the output file name to save the model.
 #' @param nvar_use Number of variants to use for the model training and validation purpose. If not specified, all variants in the data file will be used. 
 #' Note that the model training will take much longer time if using full set of variants. Recommended values ranging from 10,000 to 1,000,000. 
+#' @param MAF_cate Minor allee frequency category. Must be chosen from c("common","lowfreq","rare). If not specified, it will use all the variants to train models.
 #' @param p_train Proportion of variants used in training part. The rest of the variants would be used for validation purpose. Default value is 70%. 
 #' Note that the total number of variants for validation is `nvar_use`*(1 - `p_train`).
 #' @param trueR2Col Column number of true R2. Default value 5.
+#' @param MAFCol Column number of minor allele frequency. Optional. Must be specified if `MAF_cate` is used.
 #' @param FeatureCols Vector of column numbers of all the features used for model training. By default, it will be 6:86 including 81 features covering 
 #' population genetics, allele frequencies across populations, etc., provided online. More user-defined features are also feasible. 
 #' @param seed Random seed. Default value 123.
@@ -25,6 +27,9 @@
 #' MESA_model = train_deepRsq(file = "MESA_1000G_allchr.txt.gz", 
 #' outfile = "MESA_trained", nvar_use = 500000)
 #'
+#' MESA_common = train_deepRsq(file = "MESA_1000G_allchr.txt.gz", 
+#' MAF_cate = "common", MAFCol = 6, outfile = "MESA_common")
+#'
 #' ## If data are separated by chromosomes 
 #' JHS_model = train_deepRsq(file = paste0("JHS_1000G_chr",1:22,".txt.gz"), 
 #' outfile = "JHS_trained", nvar_use = 100000)
@@ -33,8 +38,8 @@
 #'
 #' @export
 
-train_deepRsq = function(file, header = T, outfile = NULL, nvar_use = NULL, p_train = 0.7,
- trueR2Col = 5, FeatureCols = 6:86, seed = 123, nrounds = 3000, verbose = 1, early_stopping_rounds = 50,
+train_deepRsq = function(file, header = T, outfile = NULL, nvar_use = NULL, MAF_cate = NULL, p_train = 0.7,
+ trueR2Col = 5, MAFCol = NULL, FeatureCols = 6:86, seed = 123, nrounds = 3000, verbose = 1, early_stopping_rounds = 50,
  print_every_n = 20) {
 
 set.seed(seed)
@@ -51,12 +56,29 @@ message(paste(n_file,"files detected"))
 dat = fread(file[1], header = header)
 # multiple files
 for(i in 2:n_file){
-tmp = fread(file, header = header)
+tmp = fread(file[i], header = header)
 dat = rbind(dat,tmp)
 }
 }
 
 dat = as.data.frame(dat)
+
+# MAF filter
+
+if(!is.null(MAF_cate)){
+if(is.null(MAFCol)){
+stop("MAF category specified, but MAF column doesn't specified")
+}else if(MAF_cate == "common"){
+dat = dat[which(dat[,MAFCol] >= 0.05), ]
+}else if(MAF_cate == "lowfreq"){
+dat = dat[which((dat[,MAFCol] > 0.005) & (dat[,MAFCol] < 0.05)), ]
+}else if(MAF_cate == "rare"){
+dat = dat[which(dat[,MAFCol] <= 0.005),]
+}else{
+stop("MAF category must have values chosen from 'common','lowfreq' and 'rare'")
+}
+}
+
 
 # use a subset of variants to train model
 
