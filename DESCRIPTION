@@ -1,5 +1,5 @@
-Package: deepRsq
-Title: Model training and calculation of DeepRsq
+Package: MagicalRsq
+Title: Model training and calculation of MagicalRsq
 Version: 0.1.0
 Authors@R: 
     person(given = "Quan",
@@ -7,7 +7,7 @@ Authors@R:
            role = c("aut", "cre"),
            email = "quansun@live.unc.edu",
            comment = c(ORCID = "0000-0001-8324-2803"))
-Description: This package is used for calculating deepRsq, a genotype imputation quality metric.
+Description: This package is used for calculating MagicalRsq, a genotype imputation quality metric.
 License: use_mit_license()
 Encoding: UTF-8
 LazyData: true

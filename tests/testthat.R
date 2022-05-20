@@ -1,4 +1,4 @@
 library(testthat)
-library(deepRsq)
+library(MagicalRsq)
 
-test_check("deepRsq")
+test_check("MagicalRsq")

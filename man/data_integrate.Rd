@@ -2,7 +2,7 @@
 % Please edit documentation in R/data_integrate.R
 \name{data_integrate}
 \alias{data_integrate}
-\title{Integrate data for deepRsq model training and testing}
+\title{Integrate data for MagicalRsq model training and testing}
 \usage{
 data_integrate(
   file,
@@ -33,17 +33,17 @@ The file could also contain true R2 information for model training or evaluation
 \item{outfile}{Output file name. Optional but strongly recommended.}
 }
 \value{
-Dataframe of integrated data that could be used as deepRsq training and testing input.
+Dataframe of integrated data that could be used as MagicalRsq training and testing input.
 }
 \description{
 This function is used to integrate user-input dataset containing Rsq, MAF information with provided SHIC features and allele frequencies in different populations.
-SHIC features can be downloaded at ftp://yunlianon:anon@rc-ns-ftp.its.unc.edu/deepRsq/SHIC/.
-Population-specific allele frequencies can be downloaded at ftp://yunlianon:anon@rc-ns-ftp.its.unc.edu/deepRsq/AF/.
+SHIC features can be downloaded at ftp://yunlianon:anon@rc-ns-ftp.its.unc.edu/MagicalRsq/SHIC/.
+Population-specific allele frequencies can be downloaded at ftp://yunlianon:anon@rc-ns-ftp.its.unc.edu/MagicalRsq/AF/.
 }
 \examples{
 
-BioMe_EUR_chr22 = data_integrate("BioMe_EUR_Rsq_trueR2_chr22.txt.gz", chr = 22, 
+toy_chr22 = data_integrate("toy_chr22_50k.txt.gz", chr = 22, 
 pos_col = 2, SHIC_dir = "../SHIC/", AF_dir = "../AF/", 
-outfile = "BioMe_EUR_chr22_integrated.txt.gz")
+outfile = "toy_chr22_integrated.txt.gz")
 
 }

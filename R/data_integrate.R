@@ -1,8 +1,8 @@
-#' Integrate data for deepRsq model training and testing
+#' Integrate data for MagicalRsq model training and testing
 #' 
 #' This function is used to integrate user-input dataset containing Rsq, MAF information with provided SHIC features and allele frequencies in different populations.
-#' SHIC features can be downloaded at ftp://yunlianon:anon@rc-ns-ftp.its.unc.edu/deepRsq/SHIC/. 
-#' Population-specific allele frequencies can be downloaded at ftp://yunlianon:anon@rc-ns-ftp.its.unc.edu/deepRsq/AF/.
+#' SHIC features can be downloaded at ftp://yunlianon:anon@rc-ns-ftp.its.unc.edu/MagicalRsq/SHIC/. 
+#' Population-specific allele frequencies can be downloaded at ftp://yunlianon:anon@rc-ns-ftp.its.unc.edu/MagicalRsq/AF/.
 #'
 #' @param file Required. Input file name. The file should be chromosom-specific, i.e., all the variants should be on the same chromosome. 
 #' It should contain minimum of position (in hg38), reference allele and alternative allele, with column names as POS, REF and ALT respectively. 
@@ -15,13 +15,13 @@
 #' @param AF_dir Directory containing downloaded population-specifc allele frequencies. Optional.
 #' @param outfile Output file name. Optional but strongly recommended.
 #' 
-#' @return Dataframe of integrated data that could be used as deepRsq training and testing input.
+#' @return Dataframe of integrated data that could be used as MagicalRsq training and testing input.
 #'
 #' @examples
 #' 
-#' BioMe_EUR_chr22 = data_integrate("BioMe_EUR_Rsq_trueR2_chr22.txt.gz", chr = 22, 
+#' toy_chr22 = data_integrate("toy_chr22_50k.txt.gz", chr = 22, 
 #' pos_col = 2, SHIC_dir = "../SHIC/", AF_dir = "../AF/", 
-#' outfile = "BioMe_EUR_chr22_integrated.txt.gz")
+#' outfile = "toy_chr22_integrated.txt.gz")
 #' 
 #' @importFrom data.table fread fwrite
 #' @importFrom dplyr left_join
