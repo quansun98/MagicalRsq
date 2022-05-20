@@ -68,7 +68,7 @@ In order to train MagicalRsq models, you need the true R2 (true imputation quali
 
 Note that you can use whole genome data (separated by chromosomes) to train a whole-genome model. Input files could be a vector of file names.
 
-		toy2_model = train_MagicalRsq(file = paste0("toy2_chr",1:22,".txt.gz"), outfile = "toy2", nvar_use = 500000)
+	toy2_model = train_MagicalRsq(file = paste0("toy2_chr",1:22,".txt.gz"), outfile = "toy2", nvar_use = 500000)
 
 ### Calculate MagicalRsq values
 
@@ -84,11 +84,11 @@ You will get variant-level MagicalRsq values, together with the original Rsq and
 
 After calculation of MagicalRsq, you can evaluate the performance of Rsq and/or MagicalRsq compared to true R2. You may want to specify the column numbers of trueR2, Rsq and MagicalRsq. You can only choose to disregard extremely rare variants for evaluation purpose by setting MAF or (MAC and N samples), and specifying the column number of MAF.
 
-		chr22_eval = eval_MagicalRsq(file = "test_MagicalRsq.txt.gz", MAF = 0.001, trueR2Col = 8, MAFCol = 5, RsqCol = 6, MagicalRsqCol = 7)
+	chr22_eval = eval_MagicalRsq(file = "test_MagicalRsq.txt.gz", MAF = 0.001, trueR2Col = 8, MAFCol = 5, RsqCol = 6, MagicalRsqCol = 7)
  
 All 22 chromosomes can also be evaluated together:
 
-		all_eval = eval_MagicalRsq(file = paste0("test2_chr",1:22,".txt.gz"))
+	all_eval = eval_MagicalRsq(file = paste0("test2_chr",1:22,".txt.gz"))
 
 
 
