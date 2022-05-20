@@ -6,8 +6,8 @@ MagicalRsq is a novel quality estimates of genotype imputation using XGBoost met
 
 ## Data
 
-* Population genetics (S/HIC) features can be downloaded at <ftp://yunlianon:anon@rc-ns-ftp.its.unc.edu/MagicalRsq/SHIC/>
-* Population specific allele frequencies can be downloaded at <ftp://yunlianon:anon@rc-ns-ftp.its.unc.edu/MagicalRsq/AF/>
+* [Population genetics (S/HIC) features] (ftp://yunlianon:anon@rc-ns-ftp.its.unc.edu/MagicalRsq/SHIC/)
+* [TOP-LD ancestry specific allele frequencies] (ftp://yunlianon:anon@rc-ns-ftp.its.unc.edu/MagicalRsq/AF/)
 
 ## Installation
 
@@ -74,8 +74,8 @@ Note that you can use whole genome data (separated by chromosomes) to train a wh
 
 After getting the integrated data, you can calculate MagicalRsq values for each variant in the integrated data file.
 
-                chr22_MagicalRsq  = calc_MagicalRsq(file = "test_chr22.txt.gz", model = "toy_model",
-                        FeatureCols = 6:84, keptCols = 1:7, outfile = "test_MagicalRsq.txt.gz")
+        chr22_MagicalRsq  = calc_MagicalRsq(file = "test_chr22.txt.gz", model = "toy_model",
+                FeatureCols = 6:84, keptCols = 1:7, outfile = "test_MagicalRsq.txt.gz")
 
 You will get variant-level MagicalRsq values, together with the original Rsq and estimated MAF written in the file `test_MagicalRsq.txt.gz`
 
