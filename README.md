@@ -6,8 +6,8 @@ MagicalRsq is a novel quality estimates of genotype imputation using XGBoost met
 
 ## Data
 
-[Population genetics (S/HIC) features](ftp://yunlianon:anon@rc-ns-ftp.its.unc.edu/MagicalRsq/SHIC/)
-[TOP-LD ancestry specific allele frequencies](ftp://yunlianon:anon@rc-ns-ftp.its.unc.edu/MagicalRsq/AF/)
+* Population genetics [S/HIC](https://journals.plos.org/plosgenetics/article?id=10.1371/journal.pgen.1005928) features can be downloaded at: ftp://yunlianon:anon@rc-ns-ftp.its.unc.edu/MagicalRsq/SHIC/
+* [TOP-LD](<https://www.cell.com/ajhg/fulltext/S0002-9297(22)00154-9>) ancestry specific allele frequencies can be downloaded at: ftp://yunlianon:anon@rc-ns-ftp.its.unc.edu/MagicalRsq/AF/
 
 ## Installation
 
