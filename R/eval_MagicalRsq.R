@@ -4,10 +4,10 @@
 #' 
 #' @param file Required. A vector of strings with each element being one file name. Could be a single file or multiple files (if separated by chromosomes).
 #' @param header Logical. The parameter is passing to the `fread` function. TRUE by default. Strongly recommended containing a header in your data file.
-#' @param MAC Disgard variants with extremely low minor allele counts for the evaluation purpose. Must be used together with `N` and should not be used together with `MAF`.
+#' @param minMAC Disgard variants with extremely low minor allele counts for the evaluation purpose. Must be used together with `N` and should not be used together with `MAF`.
 #' @param N Total sample size in terms of individuals in the dataset. Used to calculate MAF as the variants inclusion criteria. Must be used together with `MAC` should not be used together with `MAF`. 
-#' @param MAF Disgard variants with extremely low minor allele frequencies for the evaluation purpose. If specified some cutoff c, it will only evaluate variants with `MAF > c`. Should not be used together with `MAC` or `N`. 
-#' Note that if `MAC`,`N`, and `MAF` are all provided, `MAF` will be used as the primary threshold, and the other two parameters won't take any effects.
+#' @param minMAF Disgard variants with extremely low minor allele frequencies for the evaluation purpose. If specified some cutoff c, it will only evaluate variants with `MAF > c`. Should not be used together with `minMAC` or `N`. 
+#' Note that if `minMAC`,`N`, and `minMAF` are all provided, `minMAF` will be used as the primary threshold, and the other two parameters won't take any effects.
 #' @param trueR2Col Column number of true R2. Default value 5.
 #' @param MAFCol Column number of estimated minor allele frequency. Default value 6.
 #' @param RsqCol Column number of Rsq. Default value 7.
@@ -17,14 +17,14 @@
 #'
 #' @examples
 #'
-#' test_eval = eval_MagicalRsq(file = "test_MagicalRsq.txt.gz", MAC = 5, N = 2000)
+#' test_eval = eval_MagicalRsq(file = "test_MagicalRsq.txt.gz", minMAC = 5, N = 2000)
 #'
 #' test2_eval = eval_MagicalRsq(file = paste0("test2_chr",1:22,".txt.gz"), 
-#' MAF = 0.001, trueR2Col = 8, MAFCol = 5, RsqCol = 6, MagicalRsqCol = 7)
+#' minMAF = 0.001, trueR2Col = 8, MAFCol = 5, RsqCol = 6, MagicalRsqCol = 7)
 #'
 #' @export
 
-eval_MagicalRsq = function(file, header = T, MAC = NULL, N = NULL, MAF = NULL, trueR2Col = 5, MAFCol = 6, RsqCol = 7, MagicalRsqCol = 8){
+eval_MagicalRsq = function(file, header = T, minMAC = NULL, N = NULL, minMAF = NULL, trueR2Col = 5, MAFCol = 6, RsqCol = 7, MagicalRsqCol = 8){
 
 n_file = length(file)
 
@@ -46,14 +46,14 @@ dat = rbind(dat,tmp)
 dat = as.data.frame(dat)
 
 # Filter out low MAF variants if specified
-if((!is.null(MAC) && !is.null(N)) || (!is.null(MAF))){
+if((!is.null(minMAC) && !is.null(N)) || (!is.null(minMAF))){
 message("Evaluation not including extremely rare variants")
-if(is.null(MAF)){
+if(is.null(minMAF)){
 MAF = MAC/2/N
 }
 
-message(paste("Including variants with MAF > ", MAF))
-dat = dat[dat[,MAFCol] > MAF,]
+message(paste("Including variants with MAF > ", minMAF))
+dat = dat[dat[,MAFCol] > minMAF,]
 }
 
 # evaluate MagicalRsq and Rsq performance

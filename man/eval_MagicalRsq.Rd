@@ -7,9 +7,9 @@
 eval_MagicalRsq(
   file,
   header = T,
-  MAC = NULL,
+  minMAC = NULL,
   N = NULL,
-  MAF = NULL,
+  minMAF = NULL,
   trueR2Col = 5,
   MAFCol = 6,
   RsqCol = 7,
@@ -21,12 +21,12 @@ eval_MagicalRsq(
 
 \item{header}{Logical. The parameter is passing to the \code{fread} function. TRUE by default. Strongly recommended containing a header in your data file.}
 
-\item{MAC}{Disgard variants with extremely low minor allele counts for the evaluation purpose. Must be used together with \code{N} and should not be used together with \code{MAF}.}
+\item{minMAC}{Disgard variants with extremely low minor allele counts for the evaluation purpose. Must be used together with \code{N} and should not be used together with \code{MAF}.}
 
 \item{N}{Total sample size in terms of individuals in the dataset. Used to calculate MAF as the variants inclusion criteria. Must be used together with \code{MAC} should not be used together with \code{MAF}.}
 
-\item{MAF}{Disgard variants with extremely low minor allele frequencies for the evaluation purpose. If specified some cutoff c, it will only evaluate variants with \code{MAF > c}. Should not be used together with \code{MAC} or \code{N}.
-Note that if \code{MAC},\code{N}, and \code{MAF} are all provided, \code{MAF} will be used as the primary threshold, and the other two parameters won't take any effects.}
+\item{minMAF}{Disgard variants with extremely low minor allele frequencies for the evaluation purpose. If specified some cutoff c, it will only evaluate variants with \code{MAF > c}. Should not be used together with \code{minMAC} or \code{N}.
+Note that if \code{minMAC},\code{N}, and \code{minMAF} are all provided, \code{minMAF} will be used as the primary threshold, and the other two parameters won't take any effects.}
 
 \item{trueR2Col}{Column number of true R2. Default value 5.}
 
@@ -44,9 +44,9 @@ This function is used to evaluate MagicalRsq values calculated by \code{calc_Mag
 }
 \examples{
 
-test_eval = eval_MagicalRsq(file = "test_MagicalRsq.txt.gz", MAC = 5, N = 2000)
+test_eval = eval_MagicalRsq(file = "test_MagicalRsq.txt.gz", minMAC = 5, N = 2000)
 
 test2_eval = eval_MagicalRsq(file = paste0("test2_chr",1:22,".txt.gz"), 
-MAF = 0.001, trueR2Col = 8, MAFCol = 5, RsqCol = 6, MagicalRsqCol = 7)
+minMAF = 0.001, trueR2Col = 8, MAFCol = 5, RsqCol = 6, MagicalRsqCol = 7)
 
 }
