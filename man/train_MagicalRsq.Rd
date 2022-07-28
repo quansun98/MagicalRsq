@@ -16,6 +16,7 @@ train_MagicalRsq(
   FeatureCols = 6:84,
   seed = 123,
   nrounds = 3000,
+  max.depth = 6,
   verbose = 1,
   early_stopping_rounds = 50,
   print_every_n = 20
@@ -46,6 +47,8 @@ population genetics, allele frequencies across populations, etc., provided onlin
 \item{seed}{Random seed. Default value 123.}
 
 \item{nrounds}{Parameter passing to the \code{xgb.train} function: max number of boosting iterations. Default value 3000.}
+
+\item{max.depth}{Parameter passing to the \code{xgb.train} function: maximum depth of a tree. Default value 6.}
 
 \item{verbose}{Parameter passing to the \code{xgb.train} function: If 0, xgboost will stay silent. If 1, it will print information about performance. If 2, some additional information will be printed out.}
 
