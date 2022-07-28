@@ -29,7 +29,7 @@ To apply the pretrained model to target datasets, please refer to section **Obta
 2. Load the devtools package and install through Github.
 
 		library(devtools)
-		install_github("Quanbaby/MagicalRsq")
+		install_github("quansun98/MagicalRsq")
 
 
 ## Instructions

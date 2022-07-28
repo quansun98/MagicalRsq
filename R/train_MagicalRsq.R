@@ -15,6 +15,7 @@
 #' @param FeatureCols Vector of column numbers of all the features used for model training. By default, it will be 6:84 including 79 features covering 
 #' population genetics, allele frequencies across populations, etc., provided online. More user-defined features are also feasible. 
 #' @param seed Random seed. Default value 123.
+#' @param max.depth Parameter passing to the `xgb.train` function: maximum depth of a tree. Default value 6.
 #' @param verbose Parameter passing to the `xgb.train` function: If 0, xgboost will stay silent. If 1, it will print information about performance. If 2, some additional information will be printed out. 
 #' @param nrounds Parameter passing to the `xgb.train` function: max number of boosting iterations. Default value 3000.
 #' @param early_stopping_rounds Parameter passing to the `xgb.train` function: training with a validation set will stop if the performance doesn't improve for `k` rounds. Default value 50.
@@ -39,7 +40,7 @@
 #' @export
 
 train_MagicalRsq = function(file, header = T, outfile = NULL, nvar_use = NULL, MAF_cate = NULL, p_train = 0.7,
- trueR2Col = 5, MAFCol = NULL, FeatureCols = 6:84, seed = 123, nrounds = 3000, verbose = 1, early_stopping_rounds = 50,
+ trueR2Col = 5, MAFCol = NULL, FeatureCols = 6:84, seed = 123, nrounds = 3000, max.depth = 6, verbose = 1, early_stopping_rounds = 50,
  print_every_n = 20) {
 
 set.seed(seed)
@@ -107,7 +108,7 @@ dtest = xgb.DMatrix(data = as.matrix(test[,FeatureCols]),label = test[,trueR2Col
 
 bst = xgb.train(data = dtrain, booster="gbtree",
                   watchlist =list(eval=dtest),
-                  max.depth = 6,
+                  max.depth = max.depth,
                   nrounds = nrounds,
                   early_stopping_rounds = early_stopping_rounds,
                   maximize = FALSE,
