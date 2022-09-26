@@ -49,7 +49,7 @@ dat = as.data.frame(dat)
 if((!is.null(minMAC) && !is.null(N)) || (!is.null(minMAF))){
 message("Evaluation not including extremely rare variants")
 if(is.null(minMAF)){
-MAF = MAC/2/N
+MAF = minMAC/2/N
 }
 
 message(paste("Including variants with MAF > ", minMAF))
