@@ -14,6 +14,8 @@ Details regarding the features we used are under section **Variant-level feature
 model training procedure via XGBoost is detailed under section **Train MagicalRsq models** below.
 We release the models we trained using data from the Cystic Fibrosis Genome Project (CFGP) and UK Biobank (UKB) under folder `model/`. 
 To apply the pretrained model to target datasets, please refer to section **Obtain MagicalRsq in target data**. 
+
+Reference: [Sun Q, Yang Y, Rosen JD, et al. MagicalRsq: Machine-learning-based genotype imputation quality calibration. Am J Hum Genet. 2022;109(11):1986-1997. doi:10.1016/j.ajhg.2022.09.009](<https://www.cell.com/ajhg/fulltext/S0002-9297(22)00412-8>)
  
 ## Data
 
